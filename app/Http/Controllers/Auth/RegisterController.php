@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\Siswa;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -52,6 +53,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'kelas' => ['required', 'string', 'max:255'],
+            'no_hp' => ['required', 'string', 'max:255'],
+            'alamat' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['required', 'string'],
         ]);
@@ -65,11 +69,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' =>$data['role'],
+            'role' => $data['role'],
         ]);
+
+        if ($data['role'] === 'siswa') {
+            // Anda tidak perlu membuat objek Siswa di sini, cukup atur relasi User ke Siswa
+            $user->siswa()->create([
+                'nama' => $data['name'],
+                'kelas' => $data['kelas'],
+                'no_hp' => $data['no_hp'],
+                'alamat' => $data['alamat'],
+            ]);
+        }
+
+        if ($data['role'] === 'admin'){
+            $user->admin()->create([
+                'nama' => $data['name'],
+                'job' => $data['kelas'],
+                'no_hp' => $data['no_hp'],
+                'alamat' => $data['alamat'],
+            ]);
+        }
+
+        return $user;
     }
 }

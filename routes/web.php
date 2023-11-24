@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //     Route::get('/admin/dashboard', 'AdminController@dashboard');
 // });
 
-// Route::group(['middleware' => ['auth', 'role:siswa']], function () {
-//     // Rute-rute yang hanya dapat diakses oleh pengguna dengan peran siswa
-//     Route::get('/siswa/dashboard', 'SiswaController@dashboard');
-// });
+// Rute-rute yang hanya dapat diakses oleh pengguna dengan peran siswa
+Route::middleware(['auth', 'role:siswa'])->group(
+    function () {
+        Route::get('/profile', [\App\Http\Controllers\SiswaController::class, 'profile'])->name('siswa.profile');
+    }
+);
 
+// Rute-rute yang hanya dapat diakses oleh pengguna dengan peran admin
+Route::middleware(['auth', 'role:admin'])->group(
+    function () {
+        Route::get('/profile', [\App\Http\Controllers\AdminController::class, 'profile'])->name('admin.profile');
+    }
+);

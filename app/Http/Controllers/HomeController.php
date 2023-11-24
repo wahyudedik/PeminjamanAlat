@@ -33,12 +33,13 @@ class HomeController extends Controller
         // }
 
         $user = auth()->user(); // Mengambil informasi pengguna yang sedang login
+        $userId = $user->id; // Mendapatkan ID pengguna yang sedang login
 
         if ($user) {
             if (Gate::forUser($user)->allows('isAdmin')) {
                 return view('admin.dashboard'); // Tampilkan halaman dashboard admin
             } elseif (Gate::forUser($user)->allows('isSiswa')) {
-                return view('siswa.dashboard'); // Tampilkan halaman dashboard siswa
+                return view('siswa.dashboard', ['userId' => $userId]); // Tampilkan halaman dashboard siswa
             }
         }
 

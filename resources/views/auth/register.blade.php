@@ -45,6 +45,30 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label for="kelas" class="col-md-4 col-form-label text-md-end">Kelas/Jobs</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="kelas" id="kelas" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="no_hp" class="col-md-4 col-form-label text-md-end">No HP</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="no_hp" id="no_hp" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="alamat" class="col-md-4 col-form-label text-md-end">Alamat</label>
+
+                                <div class="col-md-6">
+                                    <textarea type="text" name="alamat" id="alamat" class="form-control" cols="30" rows="10"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 

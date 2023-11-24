@@ -12,6 +12,21 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
